@@ -48,8 +48,8 @@ public class MyBot : IChessBot
                         break;
                     }
                 } else {
-                    beta = Math.Max(beta, value);
-                    if (value >= alpha) {
+                    beta = Math.Min(beta, value);
+                    if (value <= alpha) {
                         board.UndoMove(move);
                         break;
                     }
