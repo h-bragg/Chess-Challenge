@@ -4,7 +4,7 @@ using System.Linq;
 
 public class MyBot : IChessBot
 {
-    readonly int[] pieceValues = { 10, 30, 30, 50, 90, 1000 };
+    readonly int[] pieceValues = { 100, 300, 300, 500, 900, 10000 };
 
     public Move Think(Board board, Timer timer)
     {
@@ -24,8 +24,10 @@ public class MyBot : IChessBot
 
     private (Move?, int) Search(Board board, int depth, int alpha, int beta, bool isMax, bool white) {
         if (depth == 0) { return (null, Score(board, white)); }
+        Random random = new();
+        // randomise order
         Move[] moves = board.GetLegalMoves()
-                .OrderByDescending(move => move.IsCapture ? pieceValues[(int)move.CapturePieceType - 1] : 1)
+                .OrderByDescending(move => move.IsCapture ? pieceValues[(int)move.CapturePieceType - 1] : random.Next(50))
                 .ToArray();
         if (moves.Length == 0) { return (null, Score(board, white)); }
         Move? bestMove = null;
